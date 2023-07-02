@@ -67,7 +67,8 @@ total = 42
 Enter your solution below.
 
 ```elixir
-
+loading_percent = fn complete, total -> complete / total * 100 end
+loading_percent.(12, 42)
 ```
 
 ## Rocket Ship
@@ -93,7 +94,8 @@ mass * acceleration
 Enter your solution below.
 
 ```elixir
-
+calculate_force = fn mass, acceleration -> mass * acceleration end
+calculate_force.(10, 50)
 ```
 
 ## What Do You Tip?
@@ -117,7 +119,12 @@ initial_cost * tip_percent
 Enter your solution below.
 
 ```elixir
+calculate_tip = fn cost, percent ->
+  decimal_value = percent / 100
+  cost * decimal_value
+end
 
+calculate_tip.(20, 15)
 ```
 
 ## Pythagorean Theorum
@@ -141,7 +148,8 @@ a ** 2 + b ** 2
 Enter your solution below.
 
 ```elixir
-
+pythagorean = fn a, b -> a ** 2 + b ** 2 end
+pythagorean.(4, 10)
 ```
 
 ## Bonus: Square Root
@@ -161,7 +169,8 @@ c_squared = 116
 Enter your solution below.
 
 ```elixir
-
+sqr_root = fn a -> :math.sqrt(a) end
+sqr_root.(116)
 ```
 
 ## Commit Your Progress
