@@ -65,7 +65,9 @@ small = 5
 Enter your solution below.
 
 ```elixir
-
+small = 5
+medium = 20
+large = 30
 ```
 
 ## Small, Medium, Large
@@ -95,7 +97,7 @@ small + medium + large
 Enter your answer in the code cell below.
 
 ```elixir
-
+total = small + medium + large
 ```
 
 ## Multiples
@@ -114,7 +116,7 @@ small * 10 + medium * 5 + large * 3
 Enter your answer below.
 
 ```elixir
-
+total = small * 10 + medium * 5 + large * 3
 ```
 
 ## Progress Bar
@@ -145,7 +147,10 @@ points = small + medium
 Enter your answer below.
 
 ```elixir
-
+calculate_percentage = fn points, goal -> points / goal * 100 end
+points = small + medium
+goal = 40
+current_progress = calculate_percentage.(points, goal)
 ```
 
 ## Penalties And Rewards
@@ -172,7 +177,11 @@ small * 1.6 * 3 + medium * 2 + large * 2 * 0.5
 Enter your answer below.
 
 ```elixir
+early = fn habit -> habit + habit * 0.6 end
+late = fn habit -> habit * 0.5 end
 
+total =
+  early.(small) + early.(small) + early.(small) + medium + medium + late.(large) + late.(large)
 ```
 
 ## Bonus: Add Your Own Feature
@@ -181,7 +190,14 @@ Add your own feature to the habit tracking app. Use comments to describe your fe
 how it would affect calculating the total score and/or the total percentage of completed habits.
 
 ```elixir
+# chained task -by completing a task that builds off of a previously completed task 
+# the user gains a 10% bonus to that tasks value
+chained_task = fn
+  true, task -> task + task * 0.1
+  false, task -> task
+end
 
+chained_task.(true, small)
 ```
 
 ## Commit Your Progress
