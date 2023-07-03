@@ -56,7 +56,10 @@ blank3 = "code"
 Enter your solution below.
 
 ```elixir
-
+descriptor = "person"
+from = "ideas"
+to = "reality"
+"A programmer is a " <> descriptor <> " that turns " <> from <> " into " <> to <> "."
 ```
 
 ## String Interpolation Madlib
@@ -81,7 +84,10 @@ blank3 = "foobar"
 Enter your solution below.
 
 ```elixir
-
+first = "butter"
+second = "powdered sugar"
+result = "frosting"
+"#{first} and #{second} combined makes #{result}."
 ```
 
 ## Commit Your Progress
