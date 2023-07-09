@@ -133,7 +133,13 @@ end
 Enter your solution below.
 
 ```elixir
+temperature = :rand.uniform(20)
 
+if temperature > 10 do
+  :hot
+else
+  :cold
+end
 ```
 
 ## Clear Control Flow
@@ -196,7 +202,7 @@ Here's how we translate that into code. This is significantly more straightforwa
 
 ```elixir
 # Change :sunny To :snowing, :raining, And :foggy To See A Different Result.
-weather = :sunny
+weather = :snowing
 
 case weather do
   :sunny -> "t-shirt"
@@ -278,7 +284,7 @@ We can provide any number of cases. Cases use pattern matching to decide which r
 Return each value from `1` to `5` by changing the `condition` variable below.
 
 ```elixir
-condition = nil
+condition = [1, 2, 3]
 
 case condition do
   :red -> 1
@@ -378,7 +384,7 @@ end
 Return each result from `1` to `5` by changing the `condition` variable below.
 
 ```elixir
-condition = nil
+condition = {1, "this is a STRING!", %{key: [1, 100, 100_000]}}
 
 case condition do
   [1, 2, 3] -> 1
@@ -517,7 +523,15 @@ end
 </details>
 
 ```elixir
+grade = :rand.uniform(100)
 
+cond do
+  grade >= 85 and grade <= 100 -> "A"
+  grade >= 70 and grade < 85 -> "B"
+  grade >= 55 and grade < 70 -> "C"
+  grade >= 1 and grade < 55 -> "D"
+  true -> "invalid score"
+end
 ```
 
 ## Unless
@@ -571,7 +585,11 @@ In the Elixir cell below
 * Create an `unless` statement. which returns `"awake"` unless `tired`.
 
 ```elixir
+tired = true
 
+unless tired do
+  "awake"
+end
 ```
 
 ## Commit Your Progress
