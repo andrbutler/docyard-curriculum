@@ -120,7 +120,7 @@ end
 Call the `MutliParamExample.call/3` function with different arguments.
 
 ```elixir
-
+MultiParamExample.call(1, "horse", :apple)
 ```
 
 ## Internal Module Functions
@@ -318,7 +318,13 @@ end
 Enter your solution below.
 
 ```elixir
+defmodule Languages.Japanese do
+  def greeting do
+    "こんにちは"
+  end
+end
 
+Languages.Japanese.greeting()
 ```
 
 ### Nested Modules
@@ -357,8 +363,8 @@ We use the `@` symbol to define a compile-time module attribute.
 
 ```elixir
 defmodule Hero do
-  @name "Spider-Man"
-  @nemesis "Green Goblin"
+  @name "クモ男"
+  @nemesis "教授モンスター"
 
   def introduce do
     "Hello, my name is #{@name}!"
@@ -516,7 +522,37 @@ end
 </details>
 
 ```elixir
+defmodule Math do
+  @moduledoc """
+  simple module that provides add function that accepts either two or three arguments and 
+  returns the sum.
+  """
+  @doc """
+  retuns the sum of two numbers
+  ## Examples
+    iex>Math.add(1,2)
+    3
+    iex>Math.add(15,27)
+    42
+  """
+  def add(x, y) do
+    x + y
+  end
 
+  @doc """
+  retuns the sum of three numbers
+  ## Examples
+    iex>Math.add(1,2, 3)
+    6
+    iex>Math.add(15,27, 9)
+    51
+  """
+  def add(x, y, z) do
+    x + y + z
+  end
+end
+
+Math.add(1, 2, 3)
 ```
 
 ## Default Arguments
@@ -583,7 +619,13 @@ Greeting.hello("Andrew")
 ```
 
 ```elixir
+defmodule Greeting do
+  def hello(name \\ "Andrew") do
+    IO.puts("Hello #{name}!")
+  end
+end
 
+Greeting.hello("World")
 ```
 
 ## Documentation
@@ -665,7 +707,7 @@ defmodule DoctestFailure do
   ## Examples
 
     iex> DoctestFailure.test()
-    "expected return value"
+    "actual return value"
   """
   def test do
     "actual return value"
