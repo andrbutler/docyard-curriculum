@@ -125,9 +125,25 @@ defmodule Pokemon do
       iex> Pokemon.attack(attacker, defender)
       %Pokemon{name: "Bulbasaur", type: :grass, health: 10.0, attack: 5, speed: 20}
   """
-  defstruct []
+  defstruct [:name, :type, :speed, health: 20, attack: 5]
+
+  def get_multiplier(attacker_type, defender_type) do
+    case {attacker_type, defender_type} do
+      {:fire, :grass} -> 2
+      {:fire, :water} -> 0.5
+      {:water, :fire} -> 2
+      {:water, :grass} -> 0.5
+      {:grass, :water} -> 2
+      {:grass, :fire} -> 0.5
+      {_, _} -> 1
+    end
+  end
 
   def attack(attacker, defender) do
+    multiplier = get_multiplier(attacker.type, defender.type)
+    damage = attacker.attack * multiplier
+    new_health = defender.health - damage
+    %{defender | health: new_health}
   end
 end
 ```
@@ -135,7 +151,7 @@ end
 Consider using the following Elixir cell to test your solution.
 
 ```elixir
-
+%Pokemon{name: "Charmander", type: :fire, health: 20.0, attack: 5, speed: 20}
 ```
 
 ### Pokemon Instances
@@ -186,7 +202,9 @@ Pokemon.attack(charmander, bulbasaur)
 Enter your solution below.
 
 ```elixir
-
+charmander = %Pokemon{name: "Charmander", type: :fire, health: 20.0, attack: 5, speed: 20}
+bulbasaur = %Pokemon{name: "Bulbasaur", type: :grass, health: 20.0, attack: 5, speed: 20}
+squirtle = %Pokemon{name: "Squirtle", type: :water, health: 20.0, attack: 5, speed: 20}
 ```
 
 ## Commit Your Progress
