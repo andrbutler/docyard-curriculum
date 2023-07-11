@@ -205,6 +205,7 @@ Enter your solution below.
 charmander = %Pokemon{name: "Charmander", type: :fire, health: 20.0, attack: 5, speed: 20}
 bulbasaur = %Pokemon{name: "Bulbasaur", type: :grass, health: 20.0, attack: 5, speed: 20}
 squirtle = %Pokemon{name: "Squirtle", type: :water, health: 20.0, attack: 5, speed: 20}
+Pokemon.attack(squirtle, bulbasaur)
 ```
 
 ## Commit Your Progress
