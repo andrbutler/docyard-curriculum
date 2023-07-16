@@ -86,6 +86,17 @@ defmodule Palindrome do
     false
   """
   def palindrome?(string) do
+    cond do
+      (String.at(string, 0) == String.at(string, -1) and String.length(string) == 2) or
+          String.length(string) == 1 ->
+        true
+
+      String.at(string, 0) == String.at(string, -1) ->
+        palindrome?(String.slice(string, 1, String.length(string) - 2))
+
+      true ->
+        false
+    end
   end
 end
 ```
