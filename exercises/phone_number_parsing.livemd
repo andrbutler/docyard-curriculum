@@ -129,6 +129,10 @@ defmodule PhoneNumber do
     "123-123-1234 456-456-4567"
   """
   def parse(string) do
+    match = Regex.scan(~r/(\d{3})\D*(\d{3})\D*(\d{4})/, string)
+
+    Enum.map(match, fn list -> Enum.join(List.delete_at(list, 0), "-") end)
+    |> Enum.join(" ")
   end
 end
 ```
