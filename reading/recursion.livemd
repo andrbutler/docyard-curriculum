@@ -260,6 +260,14 @@ end
 
 ```elixir
 defmodule CountDown do
+  def count(0) do
+    IO.puts(0)
+  end
+
+  def count(x) do
+    IO.puts(x)
+    count(x - 1)
+  end
 end
 ```
 
@@ -323,6 +331,15 @@ end
 
 ```elixir
 defmodule CountBetween do
+  def count(x, y) do
+    IO.puts(x)
+
+    cond do
+      x > y -> count(x - 1, y)
+      x < y -> count(x + 1, y)
+      x == y -> IO.puts('')
+    end
+  end
 end
 ```
 
