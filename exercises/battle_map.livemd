@@ -64,6 +64,10 @@ end
 defmodule Barbarian do
   defstruct []
 end
+
+defmodule Lancer do
+  defstruct []
+end
 ```
 
 ## Barbarian
@@ -100,6 +104,18 @@ end
 
 ```elixir
 # Implementation Goes Here:
+defimpl Character, for: Barbarian do
+  def can_attack?(_barbarian, {self_x, self_y}, {enemy_x, enemy_y}) do
+    range_x = (self_x - 2)..(self_x + 2)
+    range_y = (self_y - 2)..(self_y + 2)
+
+    if enemy_x in range_x and enemy_y in range_y do
+      true
+    else
+      false
+    end
+  end
+end
 
 # You May Use The Following Test Suite To Validate Your Solution.
 ExUnit.start(auto_run: false)
@@ -163,6 +179,20 @@ Create a `Wizard` implementation for the `Character` protocol.
 
 ```elixir
 # Implementation Goes Here:
+defimpl Character, for: Wizard do
+  def can_attack?(_wizard, {self_x, self_y}, {enemy_x, enemy_y}) do
+    proxemity_x = (self_x - 1)..(self_x + 1)
+    proxemity_y = (self_y - 1)..(self_y + 1)
+
+    cond do
+      enemy_x in proxemity_x and enemy_y in proxemity_y -> true
+      self_x == enemy_x -> true
+      self_y == enemy_y -> true
+      self_x - self_y == enemy_x - enemy_y -> true
+      true -> false
+    end
+  end
+end
 
 # You May Use The Following Test Suite To Validate Your Solution.
 ExUnit.start(auto_run: false)
@@ -214,7 +244,22 @@ true
 Implement your custom character below.
 
 ```elixir
+defimpl Character, for: Lancer do
+  def can_attack?(_lancer, {self_x, self_y}, {enemy_x, enemy_y}) do
+    range_x_right = (self_x + 2)..(self_x + 5)
+    range_x_left = (self_x - 2)..(self_x - 5)
+    range_y_up = (self_y + 2)..(self_y + 5)
+    range_y_down = (self_y - 2)..(self_y - 5)
 
+    cond do
+      self_x == enemy_x and (enemy_y in range_y_up or enemy_y in range_y_down) -> true
+      self_y == enemy_y and (enemy_x in range_x_right or enemy_x in range_x_left) -> true
+      true -> false
+    end
+  end
+end
+
+Character.can_attack?(%Lancer{}, {3, 3}, {3, 9})
 ```
 
 ## Commit Your Progress
