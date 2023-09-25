@@ -94,6 +94,23 @@ defmodule FileSearch do
   ["file1.txt", "file2.txt", "file3.txt", "file4.txt"]
   """
   def all(folder) do
+    {:ok, files} = File.ls(folder)
+
+    crawl(files, folder)
+    |> List.flatten()
+  end
+
+  @doc """
+  helper function that crawls down from root folder to get all file names in child directories.
+  """
+  def crawl(file_list, root_folder) do
+    Enum.map(file_list, fn file ->
+      if File.dir?(Path.join(root_folder, file)) do
+        all(Path.join(root_folder, file))
+      else
+        file
+      end
+    end)
   end
 
   @doc """
@@ -124,8 +141,19 @@ defmodule FileSearch do
   }
   """
   def by_extension(folder) do
+    all(folder)
+    |> Enum.group_by(fn string ->
+      cond do
+        String.at(string, 0) == "." -> "dotFile"
+        !String.contains?(string, ".") -> "noExtension"
+        true -> List.last(String.split(string, "."))
+      end
+    end)
   end
 end
+
+FileSearch.all("Documents/dockyard_academy_curriculum/curriculum-2.0.0/test_file_search")
+# FileSearch.by_extension(__DIR__)
 ```
 
 ### Configure Project As A Script
