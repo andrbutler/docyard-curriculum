@@ -103,23 +103,31 @@ defmodule ScoreTracker do
   # Client API
 
   def start_link(_opts) do
+    GenServer.start_link(ScoreTracker, [])
   end
 
-  def score(score_tracker_pid, amount) do
+  def add_points(score_tracker_pid, amount) do
+    GenServer.cast(score_tracker_pid, {:add_points, amount})
   end
 
   def current_score(score_tracker_pid) do
+    GenServer.call(score_tracker_pid, :current_score)
   end
 
   # Server API
-
+  @impl true
   def init(_init_arg) do
+    {:ok, 0}
   end
 
+  @impl true
   def handle_cast({:add_points, amount}, state) do
+    {:noreply, state + amount}
   end
 
+  @impl true
   def handle_call(:current_score, _from, state) do
+    {:reply, state, state}
   end
 end
 ```
@@ -218,15 +226,46 @@ defmodule MultiplayerScoreTracker do
   use GenServer
 
   def start_link(_opts) do
+    GenServer.start_link(MultiplayerScoreTracker, [])
   end
 
   def add_points(multiplayer_score_tracker_pid, player_name, amount) do
+    GenServer.cast(multiplayer_score_tracker_pid, {:add_points, amount, player_name})
   end
 
   def all_scores(multiplayer_score_tracker_pid) do
+    GenServer.call(multiplayer_score_tracker_pid, :all_scores)
   end
 
   def current_score(multiplayer_score_tracker_pid, player_name) do
+    GenServer.call(multiplayer_score_tracker_pid, {:current_score, player_name})
+  end
+
+  # Server API
+  @impl true
+  def init(_init_arg) do
+    {:ok, Map.new()}
+  end
+
+  @impl true
+  def handle_cast({:add_points, amount, player_name}, state) do
+    new_state =
+      if Map.has_key?(state, player_name) do
+        Map.update(state, player_name, amount, &(&1 + amount))
+      else
+        Map.put_new(state, player_name, amount)
+      end
+
+    {:noreply, new_state}
+  end
+
+  @impl true
+  def handle_call(:all_scores, _from, state) do
+    {:reply, state, state}
+  end
+
+  def handle_call({:current_score, player_name}, _from, state) do
+    {:reply, Map.get(state, player_name), Map.get(state, player_name)}
   end
 end
 ```
